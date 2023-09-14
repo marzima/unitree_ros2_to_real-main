@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
-project(unitree_ros2_to_real)
+project(unitree_ros2_to_real-main)
 
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(ros2_unitree_legged_msgs REQUIRED)
+find_package(ros2_unitree_legged_msgs-master REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
@@ -20,15 +20,15 @@ set(CMAKE_CXX_FLAGS "-O3")
 
 include_directories(
   include
-  ${CMAKE_SOURCE_DIR}/unitree_legged_sdk/include
+  ${CMAKE_SOURCE_DIR}/unitree_legged_sdk-a1_ros2/include
   )
   
 install(
-  DIRECTORY ${CMAKE_SOURCE_DIR}/unitree_legged_sdk/lib/
+  DIRECTORY ${CMAKE_SOURCE_DIR}/unitree_legged_sdk-a1_ros2/lib/
   DESTINATION lib
 )
 
-link_directories(${CMAKE_SOURCE_DIR}/unitree_legged_sdk/lib)
+link_directories(${CMAKE_SOURCE_DIR}/unitree_legged_sdk-a1_ros2/lib)
 
 
 # LCM STUFF
@@ -45,7 +45,7 @@ ament_target_dependencies(lcm_server_3_2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${c
 
 add_executable(twist_driver src/twist_driver.cpp)
 target_link_libraries(twist_driver ${EXTRA_LIBS})
-ament_target_dependencies(twist_driver rclcpp ros2_unitree_legged_msgs geometry_msgs std_srvs)
+ament_target_dependencies(twist_driver rclcpp ros2_unitree_legged_msgs-master geometry_msgs std_srvs)
 
 add_executable(joy_to_twist src/joy_to_twist.cpp)
 target_link_libraries(joy_to_twist ${EXTRA_LIBS})
