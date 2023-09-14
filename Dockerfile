@@ -19,9 +19,9 @@ RUN sudo pip install ros2bag-convert
 # Install our source code (A1 ROS2 drivers)
 RUN mkdir -p /home/mistlab/ros2_ws/src
 WORKDIR /home/mistlab/ros2_ws/src
-RUN git clone https://github.com/marzima/ros2_unitree_legged_msgs-master.git && \
+RUN git clone https://github.com/marzima/ros2_unitree_legged_msgs_master.git && \
     git clone https://github.com/marzima/Unitree_ros2_to_real.git && \
-    git clone https://github.com/marzima/unitree_ros2_to_real-main.git
+    git clone https://github.com/marzima/unitree_ros2_to_real_main.git
 
 # Install LCM library
 WORKDIR /home/mistlab/
