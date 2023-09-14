@@ -33,7 +33,7 @@ RUN cmake .. && make && sudo make install && sudo ldconfig -v
 
 # Install unitree_legged_sdk 3.2 version (fork) 
 WORKDIR /home/mistlab/ros2_ws/src/unitree_ros2_to_real
-RUN git clone https://github.com/marzima/unitree_legged_sdk-a1_ros2.git  
+RUN git clone https://github.com/marzima/unitree_legged_sdk_a1_ros2.git  
 RUN mkdir -p unitree_legged_sdk/build
 WORKDIR unitree_legged_sdk/build 
 RUN cmake .. && make
