@@ -15,7 +15,7 @@ Tested in Ubuntu 20.04 using ros2 foxy. It can be also used in MacOS or Windows 
 # Build (using Docker)
 Start by cloning this repo:
 ```
-git clone https://github.com/roman2veces/unitree_ros2_to_real.git
+https://github.com/marzima/unitree_ros2_to_real-main.git
 ```
 
 if this is the first time you use this docker image, run the following commands: 
