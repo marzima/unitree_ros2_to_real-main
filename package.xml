@@ -1,7 +1,7 @@
 <package format="3">
     <name>unitree_ros2_to_real_main</name>
     <version>0.0.0</version>
-    <description>The unitree_ros2_to_real package</description>
+    <description>The unitree_ros2_to_real_main package</description>
     <maintainer email="laikago@unitree.cc">unitree</maintainer>
     <license>TODO</license>
     <buildtool_depend>ament_cmake</buildtool_depend>
