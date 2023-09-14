@@ -9,14 +9,19 @@ RUN sudo apt install -y iputils-ping
 RUN sudo apt install -y libboost-all-dev
 RUN sudo apt install -y nano 
 RUN sudo apt install -y ros-foxy-joy  
+RUN sudo apt install -y ros-foxy-rqt-common-plugins
+RUN sudo apt install -y python3-pip
+
+RUN sudo pip install ros2bag-convert
 # RUN sudo apt install -y ros-foxy-velodyne 
 # RUN sudo apt install -y ros-foxy-teleop-twist-keyboard 
 
 # Install our source code (A1 ROS2 drivers)
 RUN mkdir -p /home/mistlab/ros2_ws/src
 WORKDIR /home/mistlab/ros2_ws/src
-RUN git clone https://github.com/roman2veces/ros2_unitree_legged_msgs && \
-    git clone https://github.com/roman2veces/unitree_ros2_to_real
+RUN git clone https://github.com/marzima/ros2_unitree_legged_msgs-master.git && \
+    git clone https://github.com/marzima/Unitree_ros2_to_real.git && \
+    git clone https://github.com/marzima/unitree_ros2_to_real-main.git
 
 # Install LCM library
 WORKDIR /home/mistlab/
@@ -28,7 +33,7 @@ RUN cmake .. && make && sudo make install && sudo ldconfig -v
 
 # Install unitree_legged_sdk 3.2 version (fork) 
 WORKDIR /home/mistlab/ros2_ws/src/unitree_ros2_to_real
-RUN git clone https://github.com/roman2veces/unitree_legged_sdk 
+RUN git clone https://github.com/marzima/unitree_legged_sdk-a1_ros2.git  
 RUN mkdir -p unitree_legged_sdk/build
 WORKDIR unitree_legged_sdk/build 
 RUN cmake .. && make
