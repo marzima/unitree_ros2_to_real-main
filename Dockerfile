@@ -32,16 +32,16 @@ WORKDIR lcm-1.5.0/build
 RUN cmake .. && make && sudo make install && sudo ldconfig -v
 
 # Install unitree_legged_sdk 3.2 version (fork) 
-WORKDIR /home/mistlab/ros2_ws/src/unitree_ros2_to_real
+WORKDIR /home/mistlab/ros2_ws/src/unitree_ros2_to_real_main
 RUN git clone https://github.com/marzima/unitree_legged_sdk_a1_ros2.git  
-RUN mkdir -p unitree_legged_sdk/build
-WORKDIR unitree_legged_sdk/build 
+RUN mkdir -p unitree_legged_sdk_a1_ros2/build
+WORKDIR unitree_legged_sdk_a1_ros2/build 
 RUN cmake .. && make
 
 # Set environment variables
 # 3_1 is for Aliengo robot, 3_2 is for A1 robot
 ENV UNITREE_SDK_VERSION=3_2
-ENV UNITREE_LEGGED_SDK_PATH=/home/mistlab/ros2_ws/src/unitree_ros2_to_real/unitree_legged_sdk
+ENV UNITREE_LEGGED_SDK_PATH=/home/mistlab/ros2_ws/src/unitree_ros2_to_real_main/unitree_legged_sdk_a1_ros2
 # ATTENTION: change this environment variable if you are running this docker image in a different architecture
 # possible values: amd64, arm32, arm64 
 ENV UNITREE_PLATFORM="amd64"
