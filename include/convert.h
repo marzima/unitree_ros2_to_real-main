@@ -6,15 +6,15 @@ Use of this source code is governed by the MPL-2.0 license, see LICENSE.
 #ifndef _CONVERT_H_
 #define _CONVERT_H_
 
-#include "ros2_unitree_legged_msgs/msg/low_cmd.hpp"
-#include "ros2_unitree_legged_msgs/msg/low_state.hpp"
-#include "ros2_unitree_legged_msgs/msg/high_cmd.hpp"
-#include "ros2_unitree_legged_msgs/msg/high_state.hpp"
-#include "ros2_unitree_legged_msgs/msg/motor_cmd.hpp"
-#include "ros2_unitree_legged_msgs/msg/motor_state.hpp"
-#include "ros2_unitree_legged_msgs/msg/imu.hpp"
+#include "ros2_unitree_legged_msgs_main/msg/low_cmd.hpp"
+#include "ros2_unitree_legged_msgs_main/msg/low_state.hpp"
+#include "ros2_unitree_legged_msgs_main/msg/high_cmd.hpp"
+#include "ros2_unitree_legged_msgs_main/msg/high_state.hpp"
+#include "ros2_unitree_legged_msgs_main/msg/motor_cmd.hpp"
+#include "ros2_unitree_legged_msgs_main/msg/motor_state.hpp"
+#include "ros2_unitree_legged_msgs_main/msg/imu.hpp"
 
-#include "unitree_legged_sdk/unitree_legged_sdk.h"
+#include "unitree_legged_sdk_a1_ros2/unitree_legged_sdk_a1_ros2.h"
 #include "rclcpp/rclcpp.hpp"
 
 ros2_unitree_legged_msgs::msg::IMU ToRos(UNITREE_LEGGED_SDK::IMU& imu)
