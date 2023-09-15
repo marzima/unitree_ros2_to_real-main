@@ -38,6 +38,7 @@ def generate_launch_description():
             {
                 "start_walking": False,
                 "using_imu_publisher": True
+                "using_low_publisher": True #Modify
             }
         ]
     )
