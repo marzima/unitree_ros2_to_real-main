@@ -14,7 +14,7 @@ Use of this source code is governed by the MPL-2.0 license, see LICENSE.
 #include "ros2_unitree_legged_msgs_master/msg/motor_state.hpp"
 #include "ros2_unitree_legged_msgs_master/msg/imu.hpp"
 
-#include "unitree_legged_sdk_a1_ros2/unitree_legged_sdk_a1_ros2.h"
+#include "unitree_legged_sdk/unitree_legged_sdk.h"
 #include "rclcpp/rclcpp.hpp"
 
 ros2_unitree_legged_msgs::msg::IMU ToRos(UNITREE_LEGGED_SDK::IMU& imu)
