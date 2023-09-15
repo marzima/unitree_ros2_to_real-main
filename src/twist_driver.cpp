@@ -9,6 +9,7 @@
 #include "ros2_unitree_legged_msgs_master/msg/high_cmd.h"
 #include "ros2_unitree_legged_msgs_master/msg/high_state.h"
 #include "ros2_unitree_legged_msgs_master/msg/imu.h"
+#include "ros2_unitree_leggend_msgs_master/msg/low_state.h" //Modify
 #include "convert.h"
 
 // If we remove the LCM layer, we would not need this global variables.
@@ -25,13 +26,18 @@ public:
         // ROS parameters
         this->declare_parameter("start_walking", false);
         this->declare_parameter("using_imu_publisher", false);
+        this->declare_parameter("using_low_publisher", false); //Modify
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
+        using_low_publisher = this->get_parameter("using_low_publisher").as_bool(); //Modify
         
         // Initilize publishers
         high_state_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::HighState>("state", 10);
         if (using_imu_publisher)
-            imu_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::IMU>("imuimu", 10);
+            imu_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::IMU>("imu", 10);
+
+        if (using_low_publisher) //Modify
+            low_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::LowState>("low_state", 10);
         
         // Initilize subscribers
         twist_subs_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, std::bind(&TwistDriver::driver, this, std::placeholders::_1));
@@ -56,6 +62,7 @@ public:
     // Declare publishers
     rclcpp::Publisher<ros2_unitree_legged_msgs_master::msg::HighState>::SharedPtr high_state_pub;
     rclcpp::Publisher<ros2_unitree_legged_msgs_master::msg::IMU>::SharedPtr imu_pub;
+    rclcpp::Publisher<ros2_unitree_legged_msgs_master::msg::LowState>::SharedPtr low_pub;
     
     // Declare subscribers
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_subs_;
@@ -63,6 +70,7 @@ public:
 
     // Declare general attributs
     bool using_imu_publisher = false;
+    bool using_low_publisher = false;
    
 private:
     // This function allows us to drive the robot in any mode
@@ -130,23 +138,32 @@ int main(int argc, char *argv[])
 
     // LCM Setup
     UNITREE_LEGGED_SDK::HighState high_state_lcm = {0};
+    UNITREE_LEGGED_SDK::LowState low_state_ros = {0};
     lcm_interface.SubscribeState();
+    state_interface.SubribeState();
 
     // Threads setup
     pthread_t tid;
+    pthread_t tid2;//
     pthread_create(&tid, NULL, node->lcm_update_loop, &lcm_interface);
+    pthread_create(&tid2, NULL, node->ros_update_loop, &state_interface);//
 
     // ROS loop 
     while (rclcpp::ok())
     {
         lcm_interface.Get(high_state_lcm);
+        lcm_interface.Get(low_state_ros);
         high_state_ros = ToRos(high_state_lcm);
+        low_state_ros = state2rosMsg(); //Modify
 
         // Publish robot state
         node->high_state_pub->publish(high_state_ros);
 
         if (node->using_imu_publisher)
             node->imu_pub->publish(high_state_ros.imu);
+        
+         if (node->using_low_publisher)
+            node->low_pub->publish(low_state_ros.state); //Modify
 
         executor.spin_some();
         loop_rate.sleep();
