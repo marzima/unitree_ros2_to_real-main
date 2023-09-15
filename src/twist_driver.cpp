@@ -54,8 +54,8 @@ public:
     }
 
     // Declare publishers
-    rclcpp::Publisher<ros2_unitree_legged_msgs::msg_master::HighState>::SharedPtr high_state_pub;
-    rclcpp::Publisher<ros2_unitree_legged_msgs::msg_master::IMU>::SharedPtr imu_pub;
+    rclcpp::Publisher<ros2_unitree_legged_msgs_master::msg::HighState>::SharedPtr high_state_pub;
+    rclcpp::Publisher<ros2_unitree_legged_msgs_master::msg::IMU>::SharedPtr imu_pub;
     
     // Declare subscribers
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_subs_;
