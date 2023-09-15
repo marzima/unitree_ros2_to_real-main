@@ -298,7 +298,7 @@ UNITREE_LEGGED_SDK::HighCmd ToLcm(ros2_unitree_legged_msgs_master::msg::HighCmd&
      for (int i(0); i < 2; i++)
      {
         ros_msg.head[i] = state.head[i];
-        ros_msg.sn[0] = state.SN;
+        //ros_msg.sn[0] = state.SN;
         ros_msg.version[i] = state.version[i];
      }
 
