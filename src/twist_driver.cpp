@@ -6,9 +6,9 @@
 #include <geometry_msgs/msg/twist.hpp>
 #include <std_srvs/srv/trigger.hpp>
 
-#include "ros2_unitree_legged_msgs/msg/high_cmd.h"
-#include "ros2_unitree_legged_msgs/msg/high_state.h"
-#include "ros2_unitree_legged_msgs/msg/imu.h"
+#include "ros2_unitree_legged_msgs_master/msg/high_cmd.h"
+#include "ros2_unitree_legged_msgs_master/msg/high_state.h"
+#include "ros2_unitree_legged_msgs_master/msg/imu.h"
 #include "convert.h"
 
 // If we remove the LCM layer, we would not need this global variables.
