@@ -11,7 +11,7 @@ def generate_launch_description():
 
     # Define nodes
     lcm_server_node = Node(
-        package='unitree_ros2_to_real',
+        package='unitree_ros2_to_real_main',
         executable='lcm_server_3_2',
         name='lcm_server_node',
         output='screen',
@@ -25,13 +25,13 @@ def generate_launch_description():
     )
 
     joy_to_twist_node = Node(
-        package='unitree_ros2_to_real',
+        package='unitree_ros2_to_real_main',
         executable='joy_to_twist',
         name='joy_to_twist_node'
     )
 
     twist_driver_node = Node(
-        package='unitree_ros2_to_real',
+        package='unitree_ros2_to_real_main',
         executable='twist_driver',
         name='twist_driver_node',
         parameters=[
