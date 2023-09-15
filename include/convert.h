@@ -291,43 +291,43 @@ UNITREE_LEGGED_SDK::HighCmd ToLcm(ros2_unitree_legged_msgs_master::msg::HighCmd&
 // //     return ros_msg;
 // // }
 
-// ros2_unitree_legged_msgs::msg::LowState state2rosMsg(UNITREE_LEGGED_SDK::LowState &state)
-// {
-//     ros2_unitree_legged_msgs::msg::LowState ros_msg;
+ ros2_unitree_legged_msgs_master::msg::LowState state2rosMsg(UNITREE_LEGGED_SDK::LowState &state)
+ {
+     ros2_unitree_legged_msgs_master::msg::LowState ros_msg;
 
-//     for (int i(0); i < 2; i++)
-//     {
-//         // ros_msg.head[i] = state.head[i];
-//         ros_msg.sn[0] = state.SN;
-//         // ros_msg.version[i] = state.version[i];
-//     }
+     for (int i(0); i < 2; i++)
+     {
+        ros_msg.head[i] = state.head[i];
+        ros_msg.sn[0] = state.SN;
+        ros_msg.version[i] = state.version[i];
+     }
 
-//     for (int i(0); i < 4; i++)
-//     {
-//         ros_msg.foot_force[i] = state.footForce[i];
-//         ros_msg.foot_force_est[i] = state.footForceEst[i];
-//     }
+     for (int i(0); i < 4; i++)
+     {
+         ros_msg.foot_force[i] = state.footForce[i];
+         ros_msg.foot_force_est[i] = state.footForceEst[i];
+     }
 
-//     for (int i(0); i < 40; i++)
-//     {
-//         ros_msg.wireless_remote[i] = state.wirelessRemote[i];
-//     }
+     for (int i(0); i < 40; i++)
+     {
+         ros_msg.wireless_remote[i] = state.wirelessRemote[i];
+     }
 
-//     for (int i(0); i < 20; i++)
-//     {
-//         ros_msg.motor_state[i] = state2rosMsg(state.motorState[i]);
-//     }
+     for (int i(0); i < 20; i++)
+     {
+         ros_msg.motor_state[i] = state2rosMsg(state.motorState[i]);
+     }
 
-//     ros_msg.imu = state2rosMsg(state.imu);
+     ros_msg.imu = state2rosMsg(state.imu);
 
-//     // ros_msg.bms = state2rosMsg(state.bms);
+      ros_msg.bms = state2rosMsg(state.bms);
 
-//     ros_msg.tick = state.tick;
-//     ros_msg.reserve = state.reserve;
-//     ros_msg.crc = state.crc;
+     ros_msg.tick = state.tick;
+    ros_msg.reserve = state.reserve;
+    ros_msg.crc = state.crc;
 
-//     return ros_msg;
-// }
+     return ros_msg;
+ }
 
 // ros2_unitree_legged_msgs::msg::Cartesian state2rosMsg(UNITREE_LEGGED_SDK::Cartesian &state)
 // {
