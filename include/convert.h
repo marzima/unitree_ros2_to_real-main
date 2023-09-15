@@ -19,7 +19,7 @@ Use of this source code is governed by the MPL-2.0 license, see LICENSE.
 
 ros2_unitree_legged_msgs_master::msg::IMU ToRos(UNITREE_LEGGED_SDK::IMU& imu)
 {
-    ros2_unitree_legged_msgs::msg::IMU ros_imu;
+    ros2_unitree_legged_msgs_master::msg::IMU ros_imu;
     ros_imu.quaternion[0] = imu.quaternion[0];
     ros_imu.quaternion[1] = imu.quaternion[1];
     ros_imu.quaternion[2] = imu.quaternion[2];
@@ -40,7 +40,7 @@ ros2_unitree_legged_msgs_master::msg::IMU ToRos(UNITREE_LEGGED_SDK::IMU& imu)
 
 ros2_unitree_legged_msgs_master::msg::HighState ToRos(UNITREE_LEGGED_SDK::HighState& lcm)
 {
-    ros2_unitree_legged_msgs::msg::HighState ros;
+    ros2_unitree_legged_msgs_master::msg::HighState ros;
     ros.level_flag = lcm.levelFlag;
     ros.comm_version = lcm.commVersion;
     ros.robot_id = lcm.robotID;
