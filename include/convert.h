@@ -17,7 +17,7 @@ Use of this source code is governed by the MPL-2.0 license, see LICENSE.
 #include "unitree_legged_sdk/unitree_legged_sdk.h"
 #include "rclcpp/rclcpp.hpp"
 
-ros2_unitree_legged_msgs::msg::IMU ToRos(UNITREE_LEGGED_SDK::IMU& imu)
+ros2_unitree_legged_msgs_master::msg::IMU ToRos(UNITREE_LEGGED_SDK::IMU& imu)
 {
     ros2_unitree_legged_msgs::msg::IMU ros_imu;
     ros_imu.quaternion[0] = imu.quaternion[0];
@@ -38,7 +38,7 @@ ros2_unitree_legged_msgs::msg::IMU ToRos(UNITREE_LEGGED_SDK::IMU& imu)
     return ros_imu;
 }
 
-ros2_unitree_legged_msgs::msg::HighState ToRos(UNITREE_LEGGED_SDK::HighState& lcm)
+ros2_unitree_legged_msgs_master::msg::HighState ToRos(UNITREE_LEGGED_SDK::HighState& lcm)
 {
     ros2_unitree_legged_msgs::msg::HighState ros;
     ros.level_flag = lcm.levelFlag;
@@ -74,7 +74,7 @@ ros2_unitree_legged_msgs::msg::HighState ToRos(UNITREE_LEGGED_SDK::HighState& lc
     return ros;
 }
 
-UNITREE_LEGGED_SDK::HighCmd ToLcm(ros2_unitree_legged_msgs::msg::HighCmd& ros, UNITREE_LEGGED_SDK::HighCmd lcmType)
+UNITREE_LEGGED_SDK::HighCmd ToLcm(ros2_unitree_legged_msgs_master::msg::HighCmd& ros, UNITREE_LEGGED_SDK::HighCmd lcmType)
 {
     UNITREE_LEGGED_SDK::HighCmd lcm;
     lcm.levelFlag = ros.level_flag;
