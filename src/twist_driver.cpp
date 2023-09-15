@@ -29,9 +29,9 @@ public:
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
         
         // Initilize publishers
-        high_state_pub = this->create_publisher<ros2_unitree_legged_msgs::msg::HighState>("state", 10);
+        high_state_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::HighState>("state", 10);
         if (using_imu_publisher)
-            imu_pub = this->create_publisher<ros2_unitree_legged_msgs::msg::IMU>("imu", 10);
+            imu_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::IMU>("imu", 10);
         
         // Initilize subscribers
         twist_subs_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, std::bind(&TwistDriver::driver, this, std::placeholders::_1));
@@ -54,8 +54,8 @@ public:
     }
 
     // Declare publishers
-    rclcpp::Publisher<ros2_unitree_legged_msgs::msg::HighState>::SharedPtr high_state_pub;
-    rclcpp::Publisher<ros2_unitree_legged_msgs::msg::IMU>::SharedPtr imu_pub;
+    rclcpp::Publisher<ros2_unitree_legged_msgs::msg_master::HighState>::SharedPtr high_state_pub;
+    rclcpp::Publisher<ros2_unitree_legged_msgs::msg_master::IMU>::SharedPtr imu_pub;
     
     // Declare subscribers
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_subs_;
@@ -68,7 +68,7 @@ private:
     // This function allows us to drive the robot in any mode
     void driver(const geometry_msgs::msg::Twist::SharedPtr msg)
     {
-        ros2_unitree_legged_msgs::msg::HighCmd ros_high_cmd;
+        ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
 
         if (is_walking_)
         {
@@ -96,7 +96,7 @@ private:
     void changeMode(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                     std::shared_ptr<std_srvs::srv::Trigger::Response> response)
     {
-        ros2_unitree_legged_msgs::msg::HighCmd ros_high_cmd;
+        ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
 
         if (is_walking_)
         {
@@ -125,8 +125,8 @@ int main(int argc, char *argv[])
     rclcpp::WallRate loop_rate(500);
     rclcpp::executors::SingleThreadedExecutor executor;
     executor.add_node(node);
-    ros2_unitree_legged_msgs::msg::HighCmd SendHighROS;
-    ros2_unitree_legged_msgs::msg::HighState high_state_ros;
+    ros2_unitree_legged_msgs_master::msg::HighCmd SendHighROS;
+    ros2_unitree_legged_msgs_master::msg::HighState high_state_ros;
 
     // LCM Setup
     UNITREE_LEGGED_SDK::HighState high_state_lcm = {0};
