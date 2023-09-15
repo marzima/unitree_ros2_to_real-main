@@ -21,7 +21,7 @@ git clone https://github.com/marzima/unitree_ros2_to_real_main.git
 if this is the first time you use this docker image, run the following commands: 
 
 ```
-cd unitree_ros2_to_real
+cd unitree_ros2_to_real_main
 docker build -t <image name> .
 
 # The argument: -v /dev/:/dev/ allows us to access to the usb controller in Linux
