@@ -9,7 +9,7 @@
 #include "ros2_unitree_legged_msgs_master/msg/high_cmd.h"
 #include "ros2_unitree_legged_msgs_master/msg/high_state.h"
 #include "ros2_unitree_legged_msgs_master/msg/imu.h"
-#include "ros2_unitree_leggend_msgs_master/msg/low_state.h" //Modify
+//#include "ros2_unitree_leggend_msgs_master/msg/low_state.h" //Modify
 #include "convert.h"
 
 // If we remove the LCM layer, we would not need this global variables.
