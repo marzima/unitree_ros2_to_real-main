@@ -26,7 +26,7 @@ public:
         // ROS parameters
         this->declare_parameter("start_walking", false);
         this->declare_parameter("using_imu_publisher", false);
-        this->declare_parameter("using_low_publisher", false); //Modify
+        //this->declare_parameter("using_low_publisher", false); //Modify
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
         //using_low_publisher = this->get_parameter("using_low_publisher").as_bool(); //Modify
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
     UNITREE_LEGGED_SDK::HighState high_state_lcm = {0};
     //UNITREE_LEGGED_SDK::LowState low_state_ros = {0};
     lcm_interface.SubscribeState();
-    state_interface.SubribeState();
+    //state_interface.SubribeState();
 
     // Threads setup
     pthread_t tid;
