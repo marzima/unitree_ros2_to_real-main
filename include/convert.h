@@ -66,9 +66,9 @@ ros2_unitree_legged_msgs_master::msg::HighState ToRos(UNITREE_LEGGED_SDK::HighSt
         ros.foot_force_est[i] = lcm.footForceEst[i];
     }
     ros.tick = lcm.tick;
-    for(int i = 0; i<40; i++){
-        ros.wireless_remote[i] = lcm.wirelessRemote[i];
-    }
+    // for(int i = 0; i<40; i++){
+    //     ros.wireless_remote[i] = lcm.wirelessRemote[i];
+    // }
     ros.reserve = lcm.reserve;
     ros.crc = lcm.crc;
     return ros;
