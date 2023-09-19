@@ -18,10 +18,10 @@ def generate_launch_description():
         arguments=[LaunchConfiguration('rname'), LaunchConfiguration('ctrl_level')]
     )
 
-    twist_driver_node = Node(
+    twist_driver_circle_node = Node(
         package='unitree_ros2_to_real_main',
-        executable='twist_driver',
-        name='twist_driver_node',
+        executable='twist_driver_circle',
+        name='twist_driver_circle_node',
         parameters=[
             {
                 "start_walking": True,
@@ -36,6 +36,6 @@ def generate_launch_description():
     ld.add_action(ctrl_level_arg)
     ld.add_action(firmwork_arg)
     ld.add_action(lcm_server_node)
-    ld.add_action(twist_driver_node)
+    ld.add_action(twist_driver_circle_node)
     
     return ld
