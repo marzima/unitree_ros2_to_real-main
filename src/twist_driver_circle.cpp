@@ -68,7 +68,7 @@ public:
    
 private:
     // This function allows us to drive the robot in any mode
-    void driver(const geometry_msgs::msg::Twist::SharedPtr msg)
+    void driver()
     {
         ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
 
@@ -152,7 +152,10 @@ int main(int argc, char *argv[])
 
         if (node->using_imu_publisher)
             node->imu_pub->publish(high_state_ros.imu);
+
         
+
+        node->driver();
 
         executor.spin_some();
         loop_rate.sleep();
@@ -161,3 +164,4 @@ int main(int argc, char *argv[])
     rclcpp::shutdown();
     return 0;
 }
+
