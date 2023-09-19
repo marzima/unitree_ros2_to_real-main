@@ -65,10 +65,7 @@ public:
 
     // Declare general attributs
     bool using_imu_publisher = false;
-   
-private:
-    // This function allows us to drive the robot in any mode
-    void driver()
+void driver()
     {
         ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
 
@@ -95,6 +92,10 @@ private:
 
     // At this moment, there is not a way to change to sport mode in the SDK.
     // So this function only change the mode from walking to standing up without walking.
+   
+private:
+    // This function allows us to drive the robot in any mode
+    
     void changeMode(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                     std::shared_ptr<std_srvs::srv::Trigger::Response> response)
     {
