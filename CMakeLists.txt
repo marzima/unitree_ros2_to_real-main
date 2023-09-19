@@ -51,6 +51,10 @@ add_executable(joy_to_twist src/joy_to_twist.cpp)
 target_link_libraries(joy_to_twist ${EXTRA_LIBS})
 ament_target_dependencies(joy_to_twist rclcpp sensor_msgs geometry_msgs std_srvs)
 
+add_executable(twist_driver_circle src/twist_driver_circle.cpp)
+target_link_libraries(twist_driver_circle ${EXTRA_LIBS})
+ament_target_dependencies(twist_driver_circle rclcpp ros2_unitree_legged_msgs_master geometry_msgs std_srvs)
+
 install(DIRECTORY 
    launch 
    DESTINATION share/${PROJECT_NAME}/
@@ -59,6 +63,7 @@ install(DIRECTORY
 install(TARGETS
     lcm_server_3_2
     twist_driver
+    twist_driver_circle
     joy_to_twist
     DESTINATION lib/${PROJECT_NAME}
 )
