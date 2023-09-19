@@ -77,14 +77,14 @@ void driver()
             //ros_high_cmd.rotate_speed = msg->angular.z;
             //ros_high_cmd.pitch = msg->angular.y;
         }
-        else
-        {
-            ros_high_cmd.mode = 1;
-            ros_high_cmd.yaw = msg->angular.z;
-            ros_high_cmd.roll = msg->linear.y;
-            ros_high_cmd.pitch = msg->angular.y;
-            ros_high_cmd.body_height = msg->linear.x;
-        }
+        //else
+        //{
+          //  ros_high_cmd.mode = 1;
+           // ros_high_cmd.yaw = msg->angular.z;
+            //ros_high_cmd.roll = msg->linear.y;
+            //ros_high_cmd.pitch = msg->angular.y;
+            //ros_high_cmd.body_height = msg->linear.x;
+        //}
 
         high_cmd_lcm = ToLcm(ros_high_cmd, high_cmd_lcm);
         lcm_interface.Send(high_cmd_lcm);
