@@ -17,10 +17,10 @@ UNITREE_LEGGED_SDK::LCM lcm_interface(UNITREE_LEGGED_SDK::HIGHLEVEL);
 UNITREE_LEGGED_SDK::HighCmd high_cmd_lcm = {0};
 
 // This class allows us to drive the Unitree A1 robot with twist message
-class TwistDriver : public rclcpp::Node
+class TwistDriverCircle : public rclcpp::Node
 {
 public:
-    TwistDriver() : Node("a1_twist_driver")
+    TwistDriverCircle() : Node("a1_twist_driver_circle")
     {
         // ROS parameters
         this->declare_parameter("start_walking", false);
@@ -36,12 +36,12 @@ public:
 
         
         // Initilize subscribers
-        twist_subs_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, std::bind(&TwistDriver::driver, this, std::placeholders::_1));
+        twist_subs_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, std::bind(&TwistDriverCircle::driver, this, std::placeholders::_1));
         
         // Initilize services
         change_mode_srv_ = this->create_service<std_srvs::srv::Trigger>(
             "/change_mode",
-            std::bind(&TwistDriver::changeMode, this, std::placeholders::_1, std::placeholders::_2));
+            std::bind(&TwistDriverCircle::changeMode, this, std::placeholders::_1, std::placeholders::_2));
     }
 
     // This loop allows us to get robot data through LCM communication layer
@@ -65,7 +65,6 @@ public:
 
     // Declare general attributs
     bool using_imu_publisher = false;
-    bool using_low_publisher = false;
    
 private:
     // This function allows us to drive the robot in any mode
@@ -124,7 +123,7 @@ int main(int argc, char *argv[])
 {
     // ROS2 Setup
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<TwistDriver>();
+    auto node = std::make_shared<TwistDriverCircle>();
     rclcpp::WallRate loop_rate(500);
     rclcpp::executors::SingleThreadedExecutor executor;
     executor.add_node(node);
@@ -161,4 +160,3 @@ int main(int argc, char *argv[])
 
     rclcpp::shutdown();
     return 0;
-}
