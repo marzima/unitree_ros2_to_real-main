@@ -33,10 +33,6 @@ public:
         high_state_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::HighState>("state", 10);
         if (using_imu_publisher)
             imu_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::IMU>("imu", 10);
-
-        
-        // Initilize subscribers
-        twist_subs_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, std::bind(&TwistDriverCircle::driver, this, std::placeholders::_1));
         
         // Initilize services
         change_mode_srv_ = this->create_service<std_srvs::srv::Trigger>(
