@@ -11,6 +11,11 @@
 #include "ros2_unitree_legged_msgs_master/msg/imu.h"
 #include "convert.h"
 
+#include <chrono>
+#include <iostream>
+#include <sys/time.h>
+#include <ctime>
+
 // If we remove the LCM layer, we would not need this global variables.
 // We tried to put them in the class but it was not working.
 UNITREE_LEGGED_SDK::LCM lcm_interface(UNITREE_LEGGED_SDK::HIGHLEVEL);
@@ -28,6 +33,9 @@ public:
         //this->declare_parameter("using_low_publisher", false); //Modify
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
+
+        // Create a timer to stop the robot after 5 seconds
+        timer_ = this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverCircle::stopRobot, this));
         
         // Initilize publishers
         high_state_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::HighState>("state", 10);
@@ -90,6 +98,17 @@ void driver()
     // So this function only change the mode from walking to standing up without walking.
    
 private:
+    void stopRobot()
+
+    {
+        // This function will be called after 5 seconds
+        ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
+        ros_high_cmd.mode = 2;
+        ros_high_cmd.forward_speed = 0.0; // Set the forward speed to zero
+
+        high_cmd_lcm = ToLcm(ros_high_cmd, high_cmd_lcm);
+        lcm_interface.Send(high_cmd_lcm);
+    }
     // This function allows us to drive the robot in any mode
     
     void changeMode(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
