@@ -35,7 +35,7 @@ public:
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
 
         // Create a timer to stop the robot after 5 seconds
-        timer_ = this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverCircle::stopRobot, this));
+        timer_t = this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverCircle::stopRobot, this));
         
         // Initilize publishers
         high_state_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::HighState>("state", 10);
