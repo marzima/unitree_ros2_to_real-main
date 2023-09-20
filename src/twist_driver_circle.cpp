@@ -36,6 +36,8 @@ public:
 
         // Create a timer to stop the robot after 5 seconds
         this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverCircle::stopRobot, this));
+        RCLCPP_INFO(this->get_logger(), "Timer created");
+
         
         // Initilize publishers
         high_state_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::HighState>("state", 10);
@@ -102,6 +104,7 @@ private:
 
     {
         // This function will be called after 5 seconds
+        RCLCPP_INFO(this->get_logger(), "Stopping the robot");
         ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
         ros_high_cmd.mode = 2;
         ros_high_cmd.forward_speed = 0.0; // Set the forward speed to zero
