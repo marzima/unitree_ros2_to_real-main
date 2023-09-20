@@ -30,13 +30,10 @@ public:
         // ROS parameters
         this->declare_parameter("start_walking", false);
         this->declare_parameter("using_imu_publisher", false);
-        //this->declare_parameter("using_low_publisher", false); //Modify
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
+        stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverCircle::stopWalking, this));
 
-        // Create a timer to stop the robot after 5 seconds
-        this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverCircle::stopRobot, this));
-        RCLCPP_INFO(this->get_logger(), "Timer created");
 
         
         // Initilize publishers
@@ -71,6 +68,7 @@ public:
 
     // Declare general attributs
     bool using_imu_publisher = false;
+
 void driver()
     {
         ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
@@ -91,6 +89,12 @@ void driver()
             //ros_high_cmd.pitch = msg->angular.y;
             //ros_high_cmd.body_height = msg->linear.x;
         //}
+        else
+    {
+        ros_high_cmd.mode = 1;
+        // Implement the logic to stop walking here
+        ros_high_cmd.forward_speed = 0.0; // Set forward speed to 0 to stop walking
+    }
 
         high_cmd_lcm = ToLcm(ros_high_cmd, high_cmd_lcm);
         lcm_interface.Send(high_cmd_lcm);
@@ -100,19 +104,16 @@ void driver()
     // So this function only change the mode from walking to standing up without walking.
    
 private:
-    void stopRobot()
-
-    {
-        // This function will be called after 5 seconds
-        RCLCPP_INFO(this->get_logger(), "Stopping the robot");
-        ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
-        ros_high_cmd.mode = 2;
-        ros_high_cmd.forward_speed = 0.0; // Set the forward speed to zero
-
-        high_cmd_lcm = ToLcm(ros_high_cmd, high_cmd_lcm);
-        lcm_interface.Send(high_cmd_lcm);
-    }
-    // This function allows us to drive the robot in any mode
+    // Timer to stop walking after 5 seconds
+    rclcpp::TimerBase::SharedPtr stop_walking_timer_;
+    void stopWalking()
+        {
+            // Implement the logic to stop walking here
+            // For example:
+            is_walking_ = false;
+            RCLCPP_INFO(this->get_logger(), "Stopped walking.");
+        }
+        // This function allows us to drive the robot in any mode
     
     void changeMode(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                     std::shared_ptr<std_srvs::srv::Trigger::Response> response)
@@ -183,4 +184,3 @@ int main(int argc, char *argv[])
     rclcpp::shutdown();
     return 0;
 }
-
