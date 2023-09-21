@@ -22,17 +22,17 @@ UNITREE_LEGGED_SDK::LCM lcm_interface(UNITREE_LEGGED_SDK::HIGHLEVEL);
 UNITREE_LEGGED_SDK::HighCmd high_cmd_lcm = {0};
 
 // This class allows us to drive the Unitree A1 robot with twist message
-class TwistDriverCircle : public rclcpp::Node
+class TwistDriverCircler : public rclcpp::Node
 {
 public:
-    TwistDriverCircle() : Node("a1_twist_driver_circle")
+    TwistDriverCircler() : Node("a1_twist_driver_circler")
     {
         // ROS parameters
         this->declare_parameter("start_walking", false);
         this->declare_parameter("using_imu_publisher", false);
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
-        stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverCircle::stopWalking, this));
+        stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverCircler::stopWalking, this));
 
 
         
@@ -44,7 +44,7 @@ public:
         // Initilize services
         change_mode_srv_ = this->create_service<std_srvs::srv::Trigger>(
             "/change_mode",
-            std::bind(&TwistDriverCircle::changeMode, this, std::placeholders::_1, std::placeholders::_2));
+            std::bind(&TwistDriverCircler::changeMode, this, std::placeholders::_1, std::placeholders::_2));
     }
 
     // This loop allows us to get robot data through LCM communication layer
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
 {
     // ROS2 Setup
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<TwistDriverCircle>();
+    auto node = std::make_shared<TwistDriverCircler>();
     rclcpp::WallRate loop_rate(500);
     rclcpp::executors::SingleThreadedExecutor executor;
     executor.add_node(node);
