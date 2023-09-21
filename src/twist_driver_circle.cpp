@@ -76,7 +76,7 @@ void driver()
         if (is_walking_)
         {
             ros_high_cmd.mode = 2;
-            ros_high_cmd.forward_speed = -0.1;
+            ros_high_cmd.forward_speed = 0.1;
             ros_high_cmd.side_speed = 0.015;
             ros_high_cmd.rotate_speed = 0;
             //ros_high_cmd.side_speed = msg->linear.y;
