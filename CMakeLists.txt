@@ -59,6 +59,10 @@ add_executable(twist_driver_circler src/twist_driver_circler.cpp)
 target_link_libraries(twist_driver_circler ${EXTRA_LIBS})
 ament_target_dependencies(twist_driver_circler rclcpp ros2_unitree_legged_msgs_master geometry_msgs std_srvs)
 
+add_executable(twist_driver_controlcircle src/twist_driver_controlcircle.cpp)
+target_link_libraries(twist_driver_controlcircler ${EXTRA_LIBS})
+ament_target_dependencies(twist_driver_controlcircler rclcpp ros2_unitree_legged_msgs_master geometry_msgs std_srvs)
+
 install(DIRECTORY 
    launch 
    DESTINATION share/${PROJECT_NAME}/
@@ -69,6 +73,7 @@ install(TARGETS
     twist_driver
     twist_driver_circle
     twist_driver_circler
+    twist_driver_controlcircle
     joy_to_twist
     DESTINATION lib/${PROJECT_NAME}
 )
