@@ -77,8 +77,8 @@ void driver()
         {
             ros_high_cmd.mode = 2;
             ros_high_cmd.forward_speed = 0.3;
-            ros_high_cmd.side_speed = 0.12;
-            ros_high_cmd.rotate_speed = 0;
+            ros_high_cmd.side_speed = 0;
+            ros_high_cmd.rotate_speed = 0.15;
             //ros_high_cmd.side_speed = msg->linear.y;
             //ros_high_cmd.rotate_speed = msg->angular.z;
             //ros_high_cmd.pitch = msg->angular.y;
