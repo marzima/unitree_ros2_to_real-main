@@ -50,7 +50,8 @@ docker start -i <container name>
 
 # Here you can choose between joy_control.launch.py, position_control.launch.py or 
 # walking_control.launch.py
-ros2 launch unitree_ros2_to_real_main joy_control.launch.py
+# ros2 launch unitree_ros2_to_real_main joy_control.launch.py
+walking_circle.launch.py
 ```
 
 Only if you took position_control.launch.py or walking_control.launch.py, you will need the next 
