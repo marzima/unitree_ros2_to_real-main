@@ -32,7 +32,7 @@ public:
         this->declare_parameter("using_imu_publisher", false);
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
-        stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(5), std::bind(&TwistDriverControlCircle::stopWalking, this));
+        stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(40), std::bind(&TwistDriverControlCircle::stopWalking, this));
 
 
         
@@ -76,9 +76,9 @@ void driver()
         if (is_walking_)
         {
             ros_high_cmd.mode = 2;
-            ros_high_cmd.forward_speed = 0.3;
+            ros_high_cmd.forward_speed = 0.15;
             ros_high_cmd.side_speed = 0;
-            ros_high_cmd.rotate_speed = 0.15;
+            ros_high_cmd.rotate_speed = 0.075;
             //ros_high_cmd.side_speed = msg->linear.y;
             //ros_high_cmd.rotate_speed = msg->angular.z;
             //ros_high_cmd.pitch = msg->angular.y;
