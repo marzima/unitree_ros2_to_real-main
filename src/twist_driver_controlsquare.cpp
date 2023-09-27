@@ -25,7 +25,7 @@ UNITREE_LEGGED_SDK::HighCmd high_cmd_lcm = {0};
 class TwistDriverControlSquare : public rclcpp::Node
 {
 public:
-    TwistDriverControlCircle() : Node("a1_twist_driver_controlsquare_node")
+    TwistDriverControlSquare() : Node("a1_twist_driver_controlsquare_node")
     {
         // ROS parameters
         this->declare_parameter("start_walking", false);
