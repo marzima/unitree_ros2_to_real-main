@@ -33,6 +33,7 @@ public:
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
         stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(40), std::bind(&TwistDriverControlSquare::stopWalking, this));
+        program_start_time_ = std::chrono::high_resolution_clock::now();
 
 
         
