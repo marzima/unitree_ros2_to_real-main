@@ -9,8 +9,12 @@
 #include "ros2_unitree_legged_msgs_master/msg/high_cmd.h"
 #include "ros2_unitree_legged_msgs_master/msg/high_state.h"
 #include "ros2_unitree_legged_msgs_master/msg/imu.h"
-//#include "ros2_unitree_leggend_msgs_master/msg/low_state.h" //Modify
 #include "convert.h"
+
+#include <chrono>
+#include <iostream>
+#include <sys/time.h>
+#include <ctime>
 
 // If we remove the LCM layer, we would not need this global variables.
 // We tried to put them in the class but it was not working.
@@ -18,34 +22,32 @@ UNITREE_LEGGED_SDK::LCM lcm_interface(UNITREE_LEGGED_SDK::HIGHLEVEL);
 UNITREE_LEGGED_SDK::HighCmd high_cmd_lcm = {0};
 
 // This class allows us to drive the Unitree A1 robot with twist message
-class TwistDriver : public rclcpp::Node
+class TwistDriverControlSquare : public rclcpp::Node
 {
+private: 
+    std::chrono::time_point<std::chrono::high_resolution_clock> program_start_time_; // Dichiarazione di program_start_time_
 public:
-    TwistDriver() : Node("a1_twist_driver")
+    TwistDriverControlSquare() : Node("a1_twist_driver_controlsquare_node")
     {
         // ROS parameters
         this->declare_parameter("start_walking", false);
         this->declare_parameter("using_imu_publisher", false);
-        //this->declare_parameter("using_low_publisher", false); //Modify
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
-        //using_low_publisher = this->get_parameter("using_low_publisher").as_bool(); //Modify
+        stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(40), std::bind(&TwistDriverControlSquare::stopWalking, this));
+        //program_start_time_ = std::chrono::high_resolution_clock::now();
+
+
         
         // Initilize publishers
         high_state_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::HighState>("state", 10);
         if (using_imu_publisher)
             imu_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::IMU>("imu", 10);
-
-        //if (using_low_publisher) //Modify
-          //  low_pub = this->create_publisher<ros2_unitree_legged_msgs_master::msg::LowState>("low_state", 10);
-        
-        // Initilize subscribers
-        twist_subs_ = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, std::bind(&TwistDriver::driver, this, std::placeholders::_1));
         
         // Initilize services
         change_mode_srv_ = this->create_service<std_srvs::srv::Trigger>(
             "/change_mode",
-            std::bind(&TwistDriver::changeMode, this, std::placeholders::_1, std::placeholders::_2));
+            std::bind(&TwistDriverControlSquare::changeMode, this, std::placeholders::_1, std::placeholders::_2));
     }
 
     // This loop allows us to get robot data through LCM communication layer
@@ -62,7 +64,6 @@ public:
     // Declare publishers
     rclcpp::Publisher<ros2_unitree_legged_msgs_master::msg::HighState>::SharedPtr high_state_pub;
     rclcpp::Publisher<ros2_unitree_legged_msgs_master::msg::IMU>::SharedPtr imu_pub;
-    //rclcpp::Publisher<ros2_unitree_legged_msgs_master::msg::LowState>::SharedPtr low_pub;
     
     // Declare subscribers
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_subs_;
@@ -70,37 +71,83 @@ public:
 
     // Declare general attributs
     bool using_imu_publisher = false;
-    bool using_low_publisher = false;
-   
-private:
-    // This function allows us to drive the robot in any mode
-    void driver(const geometry_msgs::msg::Twist::SharedPtr msg)
-    {
-        ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
 
-        if (is_walking_)
+void driver()
+{
+    ros2_unitree_legged_msgs_master::msg::HighCmd ros_high_cmd;
+
+    if (is_walking_)
+    {
+        ros_high_cmd.mode = 2;
+
+        // Calcola il tempo trascorso dall'avvio del programma
+        auto current_time = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed_time = current_time - program_start_time_;
+
+        // Change velocity every 10 second
+        double interval = 10.0; 
+        double phase = std::fmod(elapsed_time.count(), 4 * interval);
+
+        if (phase < interval)
         {
-            ros_high_cmd.mode = 2;
-            ros_high_cmd.forward_speed = msg->linear.x;
-            ros_high_cmd.side_speed = msg->linear.y;
-            ros_high_cmd.rotate_speed = msg->angular.z;
-            ros_high_cmd.pitch = msg->angular.y;
+            //  forward velocity = 0.15, side velocity = 0
+            ros_high_cmd.forward_speed = 0.075;
+            ros_high_cmd.side_speed = 0.0;
+            ros_high_cmd.rotate_speed = 0.0
+            ros_high_cmd.pitch = 0.0;
+        }
+        else if (phase < 2 * interval)
+        {
+            // forward velocity = 0, side velocity = 0.15
+            ros_high_cmd.forward_speed = 0.0;
+            ros_high_cmd.side_speed = 0.1;
+            ros_high_cmd.rotate_speed = 0.0
+            ros_high_cmd.pitch = 0.0;
+        }
+        else if (phase < 3 * interval)
+        {
+            //  forward velocity = -0.15, side velocity = 0
+            ros_high_cmd.forward_speed = -0.075;
+            ros_high_cmd.side_speed = 0.0;
+            ros_high_cmd.rotate_speed = 0.0
+            ros_high_cmd.pitch = 0.0;
         }
         else
         {
-            ros_high_cmd.mode = 1;
-            ros_high_cmd.yaw = msg->angular.z;
-            ros_high_cmd.roll = msg->linear.y;
-            ros_high_cmd.pitch = msg->angular.y;
-            ros_high_cmd.body_height = msg->linear.x;
+            // forward velocity = 0, side velocity = -0.15
+            ros_high_cmd.forward_speed = 0.0;
+            ros_high_cmd.side_speed = -0.1;
+            ros_high_cmd.rotate_speed = 0.0
+            ros_high_cmd.pitch = 0.0;
         }
-
-        high_cmd_lcm = ToLcm(ros_high_cmd, high_cmd_lcm);
-        lcm_interface.Send(high_cmd_lcm);
     }
+    else
+    {
+        ros_high_cmd.mode = 1;
+        ros_high_cmd.forward_speed = 0.0; // Set side speed a 0 to stop movement
+        ros_high_cmd.side_speed = 0.0;    // Set side speed a 0 to stop movement
+    }
+
+    high_cmd_lcm = ToLcm(ros_high_cmd, high_cmd_lcm);
+    lcm_interface.Send(high_cmd_lcm);
+}
+
 
     // At this moment, there is not a way to change to sport mode in the SDK.
     // So this function only change the mode from walking to standing up without walking.
+   
+private:
+    // Timer to stop walking after 5 seconds
+    rclcpp::TimerBase::SharedPtr stop_walking_timer_;
+    void stopWalking()
+        {
+            // Implement the logic to stop walking here
+            // For example:
+            is_walking_ = false;
+            RCLCPP_INFO(this->get_logger(), "Stopped walking.");
+        }
+        // This function allows us to drive the robot in any mode
+    
     void changeMode(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                     std::shared_ptr<std_srvs::srv::Trigger::Response> response)
     {
@@ -129,7 +176,7 @@ int main(int argc, char *argv[])
 {
     // ROS2 Setup
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<TwistDriver>();
+    auto node = std::make_shared<TwistDriverControlSquare>();
     rclcpp::WallRate loop_rate(500);
     rclcpp::executors::SingleThreadedExecutor executor;
     executor.add_node(node);
@@ -144,26 +191,24 @@ int main(int argc, char *argv[])
 
     // Threads setup
     pthread_t tid;
-    pthread_t tid2;//
+    pthread_t tid2;
     pthread_create(&tid, NULL, node->lcm_update_loop, &lcm_interface);
-    //pthread_create(&tid2, NULL, node->ros_update_loop, &state_interface);//
 
     // ROS loop 
     while (rclcpp::ok())
     {
         lcm_interface.Get(high_state_lcm);
-        //lcm_interface.Get(low_state_ros);
         high_state_ros = ToRos(high_state_lcm);
-        //low_state_ros = state2rosMsg(); //Modify
 
         // Publish robot state
         node->high_state_pub->publish(high_state_ros);
 
         if (node->using_imu_publisher)
             node->imu_pub->publish(high_state_ros.imu);
+
         
-         //if (node->using_low_publisher)
-           // node->low_pub->publish(low_state_ros.state); //Modify
+
+        node->driver();
 
         executor.spin_some();
         loop_rate.sleep();
