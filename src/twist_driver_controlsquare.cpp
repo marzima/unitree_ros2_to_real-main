@@ -93,7 +93,7 @@ void driver()
             //  forward velocity = 0.15, side velocity = 0
             ros_high_cmd.forward_speed = 0.075;
             ros_high_cmd.side_speed = 0.0;
-            ros_high_cmd.rotate_speed = 0.0
+            ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 2 * interval)
@@ -101,7 +101,7 @@ void driver()
             // forward velocity = 0, side velocity = 0.15
             ros_high_cmd.forward_speed = 0.0;
             ros_high_cmd.side_speed = 0.1;
-            ros_high_cmd.rotate_speed = 0.0
+            ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 3 * interval)
@@ -109,7 +109,7 @@ void driver()
             //  forward velocity = -0.15, side velocity = 0
             ros_high_cmd.forward_speed = -0.075;
             ros_high_cmd.side_speed = 0.0;
-            ros_high_cmd.rotate_speed = 0.0
+            ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
         }
         else
@@ -117,7 +117,7 @@ void driver()
             // forward velocity = 0, side velocity = -0.15
             ros_high_cmd.forward_speed = 0.0;
             ros_high_cmd.side_speed = -0.1;
-            ros_high_cmd.rotate_speed = 0.0
+            ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
         }
     }
