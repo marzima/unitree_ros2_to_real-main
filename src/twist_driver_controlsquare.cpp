@@ -24,6 +24,8 @@ UNITREE_LEGGED_SDK::HighCmd high_cmd_lcm = {0};
 // This class allows us to drive the Unitree A1 robot with twist message
 class TwistDriverControlSquare : public rclcpp::Node
 {
+private: 
+    std::chrono::time_point<std::chrono::high_resolution_clock> program_start_time_; // Dichiarazione di program_start_time_
 public:
     TwistDriverControlSquare() : Node("a1_twist_driver_controlsquare_node")
     {
@@ -33,7 +35,7 @@ public:
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
         stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(40), std::bind(&TwistDriverControlSquare::stopWalking, this));
-        program_start_time_ = std::chrono::high_resolution_clock::now();
+        //program_start_time_ = std::chrono::high_resolution_clock::now();
 
 
         
