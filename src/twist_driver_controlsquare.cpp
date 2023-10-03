@@ -80,17 +80,16 @@ void driver()
     {
         ros_high_cmd.mode = 2;
 
-        // Calcola il tempo trascorso dall'avvio del programma
+        // How much time after starting program
         auto current_time = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsed_time = current_time - program_start_time_;
 
-        // Change velocity every 10 second
-        double interval = 10.0; 
+        // Change velocity every 5 second
+        double interval = 5.0; 
         double phase = std::fmod(elapsed_time.count(), 4 * interval);
 
         if (phase < interval)
         {
-            //  forward velocity = 0.15, side velocity = 0
             ros_high_cmd.forward_speed = 0.075;
             ros_high_cmd.side_speed = 0.0;
             ros_high_cmd.rotate_speed = 0.0;
@@ -98,26 +97,51 @@ void driver()
         }
         else if (phase < 2 * interval)
         {
-            // forward velocity = 0, side velocity = 0.15
             ros_high_cmd.forward_speed = 0.0;
-            ros_high_cmd.side_speed = 0.1;
-            ros_high_cmd.rotate_speed = 0.0;
+            ros_high_cmd.side_speed = 0.0;
+            ros_high_cmd.rotate_speed = 0.1;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 3 * interval)
         {
-            //  forward velocity = -0.15, side velocity = 0
-            ros_high_cmd.forward_speed = -0.075;
+            ros_high_cmd.forward_speed = 0.075;
             ros_high_cmd.side_speed = 0.0;
             ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
         }
-        else
+        else if (phase < 4 * interval)
         {
-            // forward velocity = 0, side velocity = -0.15
             ros_high_cmd.forward_speed = 0.0;
-            ros_high_cmd.side_speed = -0.1;
-            ros_high_cmd.rotate_speed = 0.0;
+            ros_high_cmd.side_speed = 0;
+            ros_high_cmd.rotate_speed = 0.1;
+            ros_high_cmd.pitch = 0.0;
+        }
+        else if (phase < 5 * interval)
+        {
+            ros_high_cmd.forward_speed = 0.075;
+            ros_high_cmd.side_speed = 0;
+            ros_high_cmd.rotate_speed = 0;
+            ros_high_cmd.pitch = 0.0;
+        }
+        else if (phase < 6 * interval)
+        {
+            ros_high_cmd.forward_speed = 0;
+            ros_high_cmd.side_speed = 0;
+            ros_high_cmd.rotate_speed = 0.1;
+            ros_high_cmd.pitch = 0.0;
+        }
+        else if (phase < 7 * interval)
+        {
+            ros_high_cmd.forward_speed = 0.075;
+            ros_high_cmd.side_speed = 0;
+            ros_high_cmd.rotate_speed = 0;
+            ros_high_cmd.pitch = 0.0;
+        }
+        else if (phase < 8 * interval)
+        {
+            ros_high_cmd.forward_speed = 0;
+            ros_high_cmd.side_speed = 0;
+            ros_high_cmd.rotate_speed = 0.1;
             ros_high_cmd.pitch = 0.0;
         }
     }
