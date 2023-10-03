@@ -90,7 +90,7 @@ void driver()
 
         if (phase < interval)
         {
-            ros_high_cmd.forward_speed = 0.075;
+            ros_high_cmd.forward_speed = 0.15;
             ros_high_cmd.side_speed = 0.0;
             ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
@@ -99,12 +99,12 @@ void driver()
         {
             ros_high_cmd.forward_speed = 0.0;
             ros_high_cmd.side_speed = 0.0;
-            ros_high_cmd.rotate_speed = 0.1;
+            ros_high_cmd.rotate_speed = 0.12;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 3 * interval)
         {
-            ros_high_cmd.forward_speed = 0.075;
+            ros_high_cmd.forward_speed = 0.15;
             ros_high_cmd.side_speed = 0.0;
             ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
@@ -113,12 +113,12 @@ void driver()
         {
             ros_high_cmd.forward_speed = 0.0;
             ros_high_cmd.side_speed = 0;
-            ros_high_cmd.rotate_speed = 0.1;
+            ros_high_cmd.rotate_speed = 0.12;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 5 * interval)
         {
-            ros_high_cmd.forward_speed = 0.075;
+            ros_high_cmd.forward_speed = 0.15;
             ros_high_cmd.side_speed = 0;
             ros_high_cmd.rotate_speed = 0;
             ros_high_cmd.pitch = 0.0;
@@ -127,12 +127,12 @@ void driver()
         {
             ros_high_cmd.forward_speed = 0;
             ros_high_cmd.side_speed = 0;
-            ros_high_cmd.rotate_speed = 0.1;
+            ros_high_cmd.rotate_speed = 0.12;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 7 * interval)
         {
-            ros_high_cmd.forward_speed = 0.075;
+            ros_high_cmd.forward_speed = 0.15;
             ros_high_cmd.side_speed = 0;
             ros_high_cmd.rotate_speed = 0;
             ros_high_cmd.pitch = 0.0;
@@ -141,7 +141,7 @@ void driver()
         {
             ros_high_cmd.forward_speed = 0;
             ros_high_cmd.side_speed = 0;
-            ros_high_cmd.rotate_speed = 0.1;
+            ros_high_cmd.rotate_speed = 0.12;
             ros_high_cmd.pitch = 0.0;
         }
     }
