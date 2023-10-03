@@ -63,7 +63,7 @@ ros2_unitree_legged_msgs_master::msg::HighState ToRos(UNITREE_LEGGED_SDK::HighSt
         ros.foot_speed2body[i].y = lcm.footSpeed2Body[i].y;
         ros.foot_speed2body[i].z = lcm.footSpeed2Body[i].z;
         ros.foot_force[i] = lcm.footForce[i];
-        ros.foot_force_est[i] = lcm.footForceEst[i];
+        //ros.foot_force_est[i] = lcm.footForceEst[i];
     }
     ros.tick = lcm.tick;
     // for(int i = 0; i<40; i++){
