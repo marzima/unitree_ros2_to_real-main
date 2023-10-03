@@ -34,7 +34,7 @@ public:
         this->declare_parameter("using_imu_publisher", false);
         is_walking_ = this->get_parameter("start_walking").as_bool();
         using_imu_publisher = this->get_parameter("using_imu_publisher").as_bool();
-        stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(40), std::bind(&TwistDriverControlSquare::stopWalking, this));
+        stop_walking_timer_ = this->create_wall_timer(std::chrono::seconds(20), std::bind(&TwistDriverControlSquare::stopWalking, this));
         //program_start_time_ = std::chrono::high_resolution_clock::now();
 
 
@@ -85,12 +85,12 @@ void driver()
         std::chrono::duration<double> elapsed_time = current_time - program_start_time_;
 
         // Change velocity every 5 second
-        double interval = 5.0; 
+        double interval = 2.5; 
         double phase = std::fmod(elapsed_time.count(), 4 * interval);
 
         if (phase < interval)
         {
-            ros_high_cmd.forward_speed = 0.15;
+            ros_high_cmd.forward_speed = 0.2;
             ros_high_cmd.side_speed = 0.0;
             ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
@@ -99,12 +99,12 @@ void driver()
         {
             ros_high_cmd.forward_speed = 0.0;
             ros_high_cmd.side_speed = 0.0;
-            ros_high_cmd.rotate_speed = 0.12;
+            ros_high_cmd.rotate_speed = 0.13;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 3 * interval)
         {
-            ros_high_cmd.forward_speed = 0.15;
+            ros_high_cmd.forward_speed = 0.2;
             ros_high_cmd.side_speed = 0.0;
             ros_high_cmd.rotate_speed = 0.0;
             ros_high_cmd.pitch = 0.0;
@@ -113,12 +113,12 @@ void driver()
         {
             ros_high_cmd.forward_speed = 0.0;
             ros_high_cmd.side_speed = 0;
-            ros_high_cmd.rotate_speed = 0.12;
+            ros_high_cmd.rotate_speed = 0.13;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 5 * interval)
         {
-            ros_high_cmd.forward_speed = 0.15;
+            ros_high_cmd.forward_speed = 0.2;
             ros_high_cmd.side_speed = 0;
             ros_high_cmd.rotate_speed = 0;
             ros_high_cmd.pitch = 0.0;
@@ -127,12 +127,12 @@ void driver()
         {
             ros_high_cmd.forward_speed = 0;
             ros_high_cmd.side_speed = 0;
-            ros_high_cmd.rotate_speed = 0.12;
+            ros_high_cmd.rotate_speed = 0.13;
             ros_high_cmd.pitch = 0.0;
         }
         else if (phase < 7 * interval)
         {
-            ros_high_cmd.forward_speed = 0.15;
+            ros_high_cmd.forward_speed = 0.2;
             ros_high_cmd.side_speed = 0;
             ros_high_cmd.rotate_speed = 0;
             ros_high_cmd.pitch = 0.0;
@@ -141,7 +141,7 @@ void driver()
         {
             ros_high_cmd.forward_speed = 0;
             ros_high_cmd.side_speed = 0;
-            ros_high_cmd.rotate_speed = 0.12;
+            ros_high_cmd.rotate_speed = 0.3;
             ros_high_cmd.pitch = 0.0;
         }
     }
