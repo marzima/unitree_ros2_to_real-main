@@ -14,7 +14,7 @@ This version is suitable for unitree_legged_sdk v3.2.1.
 # Environment
 Make sure you have ROS Noetic install inside your Hosting Machine to be enable to get data from Unitree.
 The docker container are running ROS2 foxy
-![Alt Text](paste-the-copied-image-url-here)
+![Alt Text](unitree_ro2_to_real_main/Structure.png)
 
 
 # Run the package inside the OS Unitree (This using a TX2 NVIDIA)
