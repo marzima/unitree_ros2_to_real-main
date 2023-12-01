@@ -1,7 +1,9 @@
 # Introduction
 This package can send control commands to the Unitree A1 robot from ROS2. 
 This package is able also to collecting data from the IMU sensor inside the Unitree 
-and give the info State from the Robot
+and give the info State from the Robot.
+This package is also suitable for recieve data from the robot (RGB-D Camera and Velodyne V16 Lidar) and record it.
+
 This version is suitable for unitree_legged_sdk v3.2.1.
 
 This work is related for collecting data for to Sim to Real and Real to Sim for Reinforcement Learning
