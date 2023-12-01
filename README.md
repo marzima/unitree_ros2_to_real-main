@@ -4,7 +4,7 @@ This package is able also to collecting data from the IMU sensor inside the Unit
 and give the info State from the Robot
 This version is suitable for unitree_legged_sdk v3.2.1.
 
-This work is related for collecting data along to Sim to Real and Real to Sim for Reinforcement Learning
+This work is related for collecting data for to Sim to Real and Real to Sim for Reinforcement Learning
 
 # Dependencies:
 (this should be all installed by the Dockerfile)
