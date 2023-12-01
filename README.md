@@ -3,6 +3,8 @@ https://github.com/roman2veces/unitree_ros2_to_real
 
 # Introduction
 This package can send control commands to the Unitree A1 robot from ROS2. 
+This package is able also to collecting data from the IMU sensor inside the Unitree 
+and give the info State from the Robot
 This version is suitable for unitree_legged_sdk v3.2.1.
 
 # Dependencies:
@@ -28,34 +30,38 @@ cd unitree_ros2_to_real_main
 docker build -t <image name> .
 
 # The argument: -v /dev/:/dev/ allows us to access to the usb controller in Linux
+#If you want to using Joystick to collecting data, you have to run 2 different docker
+#container:
+# 1 Privileged --> Using for the Joystick only
+# 2 Hosting Container --> To be able to recieve and send data from Master (Running in the Host Machine) 
 docker run --name <container name> --privileged -v /dev/:/dev/ -it <image name>
+docker run --net=host -it <container name2>
 
-# We couldn't install this package with the Dockerfile, so you have to do it manually:
-sudo apt install -y ros-foxy-teleop-twist-keyboard 
 exit 
 ```
 
 # Run the package
 First, make sure that the A1 is on and standing up correctly. Then, connect your computer to 
-the robot wifi. You can also optionnally connect the usb controller to your computer if you want to driver the robot with a controller, but this only works on Linux. 
+the robot wifi. 
 
-Then, you have currently 3 options to launch this package:
+Open a terminal and connecting inside the robot OS:
+```
+ ssh unitree@192.168.123.12
+ roslaunch realsense2_camera opensource_tracking.launch
+```
+ ssh unitree@192.168.123.12
+ roslaunch velodyne_pointcloud VLP16_points.launch
+ 
+So you have to laucnh this driver:
+If you want also to collecting data you have to connect the usb controller to your computer.
 - joy_control.launch.py - to control the robot in any mode with a usb controller (only 1 terminal)
-- position_control.launch.py - to control the robot in position mode (yaw, pitch, roll) with the keyboard (2 terminals)
-- walking_control.launch.py - to control the robot in walking mode with the keyboard (2 terminals)
 
 **Terminal 1:**
 ```
 docker start -i <container name>
 
-# Here you can choose between joy_control.launch.py, position_control.launch.py or 
-# walking_control.launch.py
-# ros2 launch unitree_ros2_to_real_main joy_control.launch.py
-ros2 launch unitree_ros2_to_real_main walking_circle.launch.py
+ros2 launch unitree_ros2_to_real_main joy_control.launch.launch.py
 ```
-
-Only if you took position_control.launch.py or walking_control.launch.py, you will need the next 
-terminal to launch a twist driver
 
 **Terminal 2:**
 ```
