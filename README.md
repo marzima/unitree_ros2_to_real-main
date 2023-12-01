@@ -17,29 +17,6 @@ This version is suitable for unitree_legged_sdk v3.2.1.
 # Environment
 Tested in Ubuntu 20.04 using ros2 foxy. It can be also used in MacOS or Windows but with usb devices limited support, so you couldn't drive the robot with a usb controller but you could with the keyboard.
 
-# Build (using Docker)
-Start by cloning this repo:
-```
-git clone https://github.com/marzima/unitree_ros2_to_real_main.git
-```
-
-if this is the first time you use this docker image, run the following commands: 
-
-```
-cd unitree_ros2_to_real_main
-docker build -t <image name> .
-
-# The argument: -v /dev/:/dev/ allows us to access to the usb controller in Linux
-#If you want to using Joystick to collecting data, you have to run 2 different docker
-#container:
-# 1 Privileged --> Using for the Joystick only
-# 2 Hosting Container --> To be able to recieve and send data from Master (Running in the Host Machine) 
-docker run --name <container name> --privileged -v /dev/:/dev/ -it <image name>
-docker run --net=host -it <container name2>
-
-exit 
-```
-
 # Run the package inside the OS Unitree (This using a TX2 NVIDIA)
 First, make sure that the A1 is on and standing up correctly. Then, connect your computer to 
 the robot wifi. This robot has inside ROS melodic. To recieve all the topics from Unitree
@@ -57,6 +34,25 @@ Open a terminal and connecting inside the robot OS:
  #Open another terminal and run (For Velodyne16 Lidar):
  ssh unitree@192.168.123.12
  roslaunch velodyne_pointcloud VLP16_points.launch
+```
+# Build (using Docker)
+Start by cloning this repo:
+```
+git clone https://github.com/marzima/unitree_ros2_to_real_main.git
+```
+if this is the first time you use this docker image, run the following commands: 
+```
+cd unitree_ros2_to_real_main
+docker build -t <image name> .
+
+# The argument: -v /dev/:/dev/ allows us to access to the usb controller in Linux
+#If you want to using Joystick to collecting data, you have to run 2 different docker
+#container:
+# 1 Privileged --> Using for the Joystick only
+# 2 Hosting Container --> To be able to recieve and send data from Master (Running in the Host Machine) 
+docker run --name <container name> --privileged -v /dev/:/dev/ -it <image name>
+docker run --net=host -it <container name2>
+exit 
 ```
 # Inside the Privileged Container (Joy, IMU and STATE)
 **Terminal 1:**
