@@ -12,7 +12,10 @@ This version is suitable for unitree_legged_sdk v3.2.1.
 * [lcm](https://github.com/lcm-proj/lcm/archive/refs/tags/)
 
 # Environment
-Tested in Ubuntu 20.04 using ros2 foxy. It can be also used in MacOS or Windows but with usb devices limited support, so you couldn't drive the robot with a usb controller but you could with the keyboard.
+Make sure you have ROS Noetic install inside your Hosting Machine to be enable to get data from Unitree.
+The docker container are running ROS2 foxy
+![Alt Text](paste-the-copied-image-url-here)
+
 
 # Run the package inside the OS Unitree (This using a TX2 NVIDIA)
 First, make sure that the A1 is on and standing up correctly. Then, connect your computer to 
