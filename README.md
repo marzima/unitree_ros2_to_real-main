@@ -51,6 +51,7 @@ Open a terminal and connecting inside the robot OS:
 ```
  ssh unitree@192.168.123.12
  roslaunch velodyne_pointcloud VLP16_points.launch
+ ```
  
 So you have to laucnh this driver:
 If you want also to collecting data you have to connect the usb controller to your computer.
