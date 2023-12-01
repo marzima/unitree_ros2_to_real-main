@@ -9,6 +9,7 @@ RUN sudo apt install -y iputils-ping
 RUN sudo apt install -y libboost-all-dev
 RUN sudo apt install -y nano 
 RUN sudo apt install -y ros-foxy-joy  
+RUN sudo apt install -y ros-foxy-rosbridge-server
 RUN sudo apt install -y ros-foxy-rqt-common-plugins
 RUN sudo apt install -y python3-pip
 
