@@ -40,37 +40,47 @@ docker run --net=host -it <container name2>
 exit 
 ```
 
-# Run the package
+# Run the package inside the OS Unitree (This using a TX2 NVIDIA)
 First, make sure that the A1 is on and standing up correctly. Then, connect your computer to 
-the robot wifi. 
+the robot wifi. This robot has inside ROS melodic. To recieve all the topics from Unitree
+inside your hosting machine (I have ROS-noetic inside), make sure to run a Master inside your 
+Hosting Machine (follow this step):
+https://razbotics.wordpress.com/2018/01/23/ros-distributed-systems/
+```
+roscore #launch inside your Hosting Machine
+```
 
 Open a terminal and connecting inside the robot OS:
 ```
  ssh unitree@192.168.123.12
- roslaunch realsense2_camera opensource_tracking.launch
+ roslaunch realsense2_camera opensource_tracking.launch #driver for RGB-D Camera
+ #Open another terminal and run (For Velodyne16 Lidar):
  ssh unitree@192.168.123.12
  roslaunch velodyne_pointcloud VLP16_points.launch
-
 ```
- 
-So you have to laucnh this driver:
+# Inside the Privileged Container (Joy, IMU and STATE)
+**Terminal 1:**
+
+So you have to laucnh this driver inside your docker container:
 If you want also to collecting data you have to connect the usb controller to your computer.
 - joy_control.launch.py - to control the robot in any mode with a usb controller (only 1 terminal)
 
-**Terminal 1:**
 ```
 docker start -i <container name>
 
 ros2 launch unitree_ros2_to_real_main joy_control.launch.launch.py
 ```
-
-**Terminal 2:**
+# Inside the HOST-Container
+MAKE SURE YOU HAVE ROS-BRIDGE INSIDE CONTAINER (OTHERWISE YOU HAVE TO INSTALL IT with sudo apt-get install)
+**Terminal 1:**
 ```
 docker exec -it <container name> bash
-
-# I strongly recommend to change the speed when using the teleop_twist_keyboard package
-# you will see the indications to do it after executing the next command
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+ros2 run ros1_bridge dynamic_bridge --bridge-all-topics #Now you can see all the topics if you want
+```
+**Terminal 2:**
+If you want to record all the data in a ROS bag, exec the host container to recieve all topic from the robot:
+```
+ros2 bag record --all 
 ```
 
 # How to read robot state?
