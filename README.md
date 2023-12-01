@@ -107,5 +107,6 @@ This data can be use it by reading the variable high_state_ros in the [src/twist
 
 - If you don't see the usb controller values, for example if you use ros2 topic echo /joy, you should make sure that you connected de usb controller before starting the container.
 
-- If you are not able to ping the robot computers from the container, make sure that you connect to the wifi before starting the container (in MacOS restarting the computer could be also necessary) 
+- If you are not able to ping the robot computers from the container, make sure that you connect to the wifi before starting the container (in MacOS restarting the computer could be also necessary)
+- The camera inside the robot is a Intel Realsense 435i, the driver opensource is for V-SLAM. The camera may has some problem (Calibration I think). Try to figure it out
 
