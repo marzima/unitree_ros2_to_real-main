@@ -14,7 +14,8 @@ This work is related for collecting data for to Sim to Real and Real to Sim for 
 * [unitree_legged_sdk v3.2 (fork)](https://github.com/roman2veces/unitree_legged_sdk)
 * [ros2_unitree_legged_msgs (fork)](https://github.com/roman2veces/ros2_unitree_legged_msgs)
 * [lcm](https://github.com/lcm-proj/lcm/archive/refs/tags/)
-* [https://github.com/IntelRealSense/realsense-ros/wiki/SLAM-with-D435i)
+* https://github.com/IntelRealSense/realsense-ros/wiki/SLAM-with-D435i
+* https://github.com/IntelRealSense/realsense-ros/wiki/SLAM-with-D435i
 
 # Environment
 Make sure you have ROS Noetic install inside your Hosting Machine to be enable to get data from Unitree.
