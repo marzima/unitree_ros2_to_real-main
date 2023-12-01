@@ -77,8 +77,6 @@ ros2 launch unitree_ros2_to_real_main joy_control.launch.launch.py
 ```
 # Inside the HOST-Container
 
-MAKE SURE YOU HAVE ROS-BRIDGE INSIDE CONTAINER (OTHERWISE YOU HAVE TO INSTALL IT with sudo apt-get install)
-
 **Terminal 1:**
 ```
 docker exec -it <container name> bash
