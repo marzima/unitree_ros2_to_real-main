@@ -66,7 +66,7 @@ exit
 # Inside the Privileged Container (Joy, IMU and STATE)
 **Terminal 1:**
 
-So you have to laucnh this driver inside your docker container:
+So you have to launch this driver inside your docker container:
 If you want also to collecting data you have to connect the usb controller to your computer.
 - joy_control.launch.py - to control the robot in any mode with a usb controller (only 1 terminal)
 
