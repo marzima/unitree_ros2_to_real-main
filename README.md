@@ -1,6 +1,3 @@
-# See Original Work
-https://github.com/roman2veces/unitree_ros2_to_real
-
 # Introduction
 This package can send control commands to the Unitree A1 robot from ROS2. 
 This package is able also to collecting data from the IMU sensor inside the Unitree 
